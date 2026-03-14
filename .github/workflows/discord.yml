@@ -14,7 +14,14 @@ jobs:
         run: |
           TIMESTAMP=$(date +"%d/%m/%Y %H:%M:%S")
 
+          MESSAGE="🚀 Commit mới
+Repo: ${{ github.repository }}
+Branch: ${{ github.ref_name }}
+User: ${{ github.actor }}
+Message: ${{ github.event.head_commit.message }}
+Time: $TIMESTAMP"
+
           curl -H "Content-Type: application/json" \
           -X POST \
-          -d "{\"content\":\"🚀 Commit mới\nRepo: ${{ github.repository }}\nBranch: ${{ github.ref_name }}\nUser: ${{ github.actor }}\nMessage: ${{ github.event.head_commit.message }}\nTime: $TIMESTAMP\"}" \
-          ${{ secrets.DISCORD_WEBHOOK }}
+          -d "{\"content\":\"$MESSAGE\"}" \
+          "${{ secrets.DISCORD_WEBHOOK }}"
